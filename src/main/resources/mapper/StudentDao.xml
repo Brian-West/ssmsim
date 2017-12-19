@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssmsim.dao.IStudentDao">
+    <resultMap id="studentMap" type="Student">
+        <id column="student_id" property="studentId"/>
+        <result column="student_birth" property="studentBirth"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_sex" property="studentSex"/>
+        <result column="class_id" property="classId"/>
+        <result column="student_city" property="studentCity"/>
+        <result column="student_photo" property="studentPhoto"/>
+        <result column="student_profile" property="studentProfile"/>
+    </resultMap>
+    <select id="getStudentById" parameterType="String" resultMap="studentMap">
+        SELECT *
+        FROM student
+        WHERE student_id = #{id}
+    </select>
+
+    <insert id="insertStudentRequest">
+        INSERT INTO StudentRequest
+                VALUES (#{stuId}, #{student})
+    </insert>
+
+    <select id="getRequest" parameterType="String" resultType="StudentRequest">
+        SELECT *
+        FROM StudentRequest
+        WHERE student_id = #{id}
+    </select>
+</mapper>

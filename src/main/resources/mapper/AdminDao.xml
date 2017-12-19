@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssmsim.dao.IAdminDao">
+    <resultMap id="adminMap" type="Admin">
+        <id column="user_name" property="userName"/>
+        <result column="user_password" property="userPassword"/>
+    </resultMap>
+
+    <select id="getAdmin" parameterType="String" resultMap="adminMap">
+        SELECT user_name, user_password
+        FROM user_information
+        WHERE user_name = #{id} AND is_admin = 1
+    </select>
+</mapper>
