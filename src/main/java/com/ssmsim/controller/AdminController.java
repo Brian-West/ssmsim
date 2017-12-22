@@ -1,12 +1,11 @@
 package com.ssmsim.controller;
 
+import com.ssmsim.model.MasterRequest;
 import com.ssmsim.service.IAdminService;
 import com.ssmsim.utils.ImportUsers;
+import com.ssmsim.viewObject.LoginUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -16,10 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/admin")
+@CrossOrigin("http://localhost:8081")
 public class AdminController {
 
     @Resource
@@ -27,10 +30,14 @@ public class AdminController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public Boolean adminLogin(@RequestParam("userName")String userName, @RequestParam("pwd")String password, HttpSession session){
-        boolean state = adminService.adminLogin(userName, password);
-        session.setAttribute("adminId", userName);
-        return state;
+    public Map adminLogin(@RequestBody LoginUser user, HttpSession session) {
+        String state = adminService.adminLogin(user.getUserName(), user.getPassword());
+        if(state.equals("success")) {
+            session.setAttribute("adminId", user.getUserName());
+        }
+        Map<String, Object> result = new HashMap<>();
+        result.put("valid", state);
+        return result;
     }
 
     @RequestMapping(value = "import", method = RequestMethod.GET)
@@ -66,7 +73,36 @@ public class AdminController {
         return state;
     }
 
-    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    @RequestMapping(value = "requests", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Integer> getAllRequests() {
+        return adminService.getRequests();
+    }
+
+    @RequestMapping(value = "request", method = RequestMethod.GET)
+    @ResponseBody
+    public MasterRequest getRequest(@RequestParam("requestId")String id, HttpSession session) {
+        int requestId = Integer.parseInt(id);
+        session.setAttribute("requestId", requestId);
+        return adminService.getRequestById(requestId);
+    }
+
+    @RequestMapping(value = "admit", method = RequestMethod.GET)
+    @ResponseBody
+    public Boolean admitRequest(HttpSession session) {
+        int requestId = (int)session.getAttribute("requestId");
+        adminService.acceptRequest(requestId);
+        return true;
+    }
+
+    @RequestMapping(value = "refuse", method = RequestMethod.GET)
+    public Boolean refuseRequest(HttpSession session, @RequestParam("reason")String reason) {
+        int requestId = (int)session.getAttribute("requestId");
+        adminService.refuseRequest(requestId, reason);
+        return true;
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
     @ResponseBody
     public Boolean adminLogout(HttpSession session){
         session.removeAttribute("adminId");

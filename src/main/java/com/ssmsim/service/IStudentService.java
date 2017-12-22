@@ -4,10 +4,14 @@ import com.ssmsim.model.Student;
 
 public interface IStudentService {
 
-    Student studentLogin(String studentId, String password);
+    Student getStudentInfo(String studentId);
 
-    void writeStudentRequest(String stuId, Student info);
+//    void writeStudentRequest(String stuId, Student info);
+
+    boolean writeStudentRequest(String stuId, String content);
 
     boolean getRequestState(String stuId);
+
+//    boolean modifyPassword(String stuId, String newPwd, String oldPwd);
 
 }

@@ -4,10 +4,14 @@
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ssmsim.dao.IUserDao">
 
-    <select id="selectUser" resultType="User" parameterType="long">
-        SELECT *
-        FROM user
-        WHERE id = #{id}
+    <select id="selectUserPassword" parameterType="String" resultType="String">
+        SELECT user_password
+        FROM user_information
+        WHERE user_name = #{userName}
     </select>
+
+    <update id="updateUserPassword">
+        UPDATE user_information SET user_password = #{password} WHERE user_name = #{userName}
+    </update>
 
 </mapper>

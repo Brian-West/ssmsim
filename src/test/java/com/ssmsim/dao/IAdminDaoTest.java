@@ -15,8 +15,9 @@ public class IAdminDaoTest {
     @Resource
     private IAdminDao dao;
 
+    //测试成功
     @Test
-    public void testGetAdmin() {
-        System.out.println(dao.getAdmin(""));
+    public void testSelectAdminPassword() {
+        System.out.println(dao.selectAdminPassword("yang"));
     }
 }

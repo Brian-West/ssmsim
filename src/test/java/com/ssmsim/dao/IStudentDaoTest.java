@@ -17,7 +17,13 @@ public class IStudentDaoTest {
 
     @Test
     public void testGetStudentById() {  // 测试成功
-        System.out.println(dao.getStudentById("201530611050").toString());
+        System.out.println(dao.getStudentById("201530613979").toString());
     }
+
+    @Test
+    public void testSelectStudentPassword() {   //测试成功
+        System.out.println(dao.selectStudentPassword("201530613979"));
+    }
+
 
 }

@@ -11,11 +11,12 @@
         <result column="student_city" property="studentCity"/>
         <result column="student_photo" property="studentPhoto"/>
         <result column="student_profile" property="studentProfile"/>
+        <result column="user_password" property="password"/>
     </resultMap>
     <select id="getStudentById" parameterType="String" resultMap="studentMap">
-        SELECT *
-        FROM student
-        WHERE student_id = #{id}
+        SELECT student.*, user_information.user_password
+        FROM student, user_information
+        WHERE student.student_id = #{id} AND user_information.user_name = #{id}
     </select>
 
     <insert id="insertStudentRequest">
@@ -27,5 +28,11 @@
         SELECT *
         FROM StudentRequest
         WHERE student_id = #{id}
+    </select>
+
+    <select id="selectStudentPassword" parameterType="String" resultType="String">
+        SELECT user_password
+        FROM user_information
+        WHERE user_name = #{stuId}
     </select>
 </mapper>

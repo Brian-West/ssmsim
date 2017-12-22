@@ -1,9 +1,9 @@
 package com.ssmsim.service;
 
-import com.ssmsim.model.User;
-
 public interface IUserService {
 
-    User selectUser(long userId);
+    String userLogin(String userName, String password);
+
+    String modifyUserPassword(String userName, String oldPwd, String newPwd);
 
 }

@@ -4,6 +4,7 @@ import com.ssmsim.dao.IStudentDao;
 import com.ssmsim.model.Student;
 import com.ssmsim.model.StudentRequest;
 import com.ssmsim.service.IStudentService;
+import com.ssmsim.utils.GetLoginState;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,27 +16,21 @@ public class StudentService implements IStudentService{
     @Resource
     private IStudentDao studentDao;
 
+    //测试成功
     @Override
-    public Student studentLogin(String studentId, String password) {
-        Student student = studentDao.getStudentById(studentId);
-        if(student != null) {
-            if(student.getPassword().equals(password)) {
-                student.setState("success");
-            } else {
-                student.setState("wrongPwd");
-            }
-        } else {
-            student = new Student();
-            student.setState("notExist");
-        }
-
-        return student;
+    public Student getStudentInfo(String studentId) {
+        return studentDao.getStudentById(studentId);
     }
 
     @Override
-    public void writeStudentRequest(String stuId, Student info) {
-        studentDao.insertStudentRequest(stuId, info);
+    public boolean writeStudentRequest(String stuId, String content) {
+        return studentDao.insertStudentRequest(stuId, content);
     }
+
+//    @Override
+//    public void writeStudentRequest(String stuId, Student info) {
+//        studentDao.insertStudentRequest(stuId, info);
+//    }
 
     @Override
     public boolean getRequestState(String stuId) {
@@ -49,4 +44,10 @@ public class StudentService implements IStudentService{
         }
         return isDone;
     }
+
+//    @Override
+//    public boolean modifyPassword(String stuId, String newPwd, String oldPwd) {
+//        String pwd = studentDao.selectStudentPassword(stuId);
+//        return pwd.equals(oldPwd) && studentDao.updateStudentPassword(stuId, newPwd);
+//    }
 }

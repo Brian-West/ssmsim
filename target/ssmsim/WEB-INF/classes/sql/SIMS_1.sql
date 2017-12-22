@@ -1,0 +1,440 @@
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+--
+-- Host: localhost    Database: SIMS
+-- ------------------------------------------------------
+-- Server version	5.7.20-0ubuntu0.16.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Course`
+--
+
+DROP TABLE IF EXISTS `Course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Course` (
+  `course_id` varchar(20) NOT NULL,
+  `course_name` varchar(100) DEFAULT NULL,
+  `course_credit` float DEFAULT NULL,
+  PRIMARY KEY (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Course`
+--
+
+LOCK TABLES `Course` WRITE;
+/*!40000 ALTER TABLE `Course` DISABLE KEYS */;
+INSERT INTO `Course` VALUES ('CS224d','Deep Learning for Natural Language Processing\n',3.5),('CS224n','Natural Language Processing with Deep Learning',3.5),('CS229','Machine Learning',5),('CS231n','Convolutional Neural Networks for Visual Recognition',3.5);
+/*!40000 ALTER TABLE `Course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `class`
+--
+
+DROP TABLE IF EXISTS `class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `class` (
+  `class_id` varchar(20) NOT NULL,
+  `class_name` varchar(20) DEFAULT NULL,
+  `advise_name` varchar(20) DEFAULT NULL,
+  `grade` year(4) DEFAULT NULL,
+  `college_id` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`class_id`),
+  KEY `FK_Reference_13` (`college_id`),
+  KEY `class_college_college_id_fk` (`college_id`),
+  CONSTRAINT `FK_Reference_13` FOREIGN KEY (`college_id`) REFERENCES `college` (`college_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `class`
+--
+
+LOCK TABLES `class` WRITE;
+/*!40000 ALTER TABLE `class` DISABLE KEYS */;
+INSERT INTO `class` VALUES ('20140001','2014级软件工程一班',NULL,2014,'SCUT00'),('20140002','2014级软件工程二班','',2014,'SCUT00'),('20140003','2014级软件工程三班','',2014,'SCUT00'),('20140004','2014级软件工程四班',NULL,2014,'SCUT00'),('20140005','2014级软件工程五班',NULL,2014,'SCUT00'),('20140006','2014级软件工程六班',NULL,2014,'SCUT00'),('20140007','2014级软件工程卓越班','',2014,'SCUT00'),('20150001','2015级软件工程一班',NULL,2015,'SCUT00'),('20150002','2015级软件工程二班','吴庆耀',2015,'SCUT00'),('20150003','2015级软件工程三班','方琼',2015,'SCUT00'),('20150004','2015级软件工程四班',NULL,2015,'SCUT00'),('20150005','2015级软件工程五班',NULL,2015,'SCUT00'),('20150006','2015级软件工程六班',NULL,2015,'SCUT00'),('20150007','2015级软件工程卓越班','蔡毅',2015,'SCUT00'),('20160001','2016级软件工程一班',NULL,2016,'SCUT00'),('20160002','2016级软件工程二班','',2016,'SCUT00'),('20160003','2016级软件工程三班','',2016,'SCUT00'),('20160004','2016级软件工程四班',NULL,2016,'SCUT00'),('20160005','2016级软件工程五班',NULL,2016,'SCUT00'),('20160006','2016级软件工程六班',NULL,2016,'SCUT00'),('20160007','2016级软件工程卓越班','',2016,'SCUT00'),('20160011','2016级软件工程专硕班',NULL,2016,'SCUT00');
+/*!40000 ALTER TABLE `class` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `class_title`
+--
+
+DROP TABLE IF EXISTS `class_title`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `class_title` (
+  `title_id` varchar(20) NOT NULL,
+  `class_id` varchar(20) NOT NULL,
+  PRIMARY KEY (`title_id`,`class_id`),
+  KEY `FK_Reference_12` (`class_id`),
+  CONSTRAINT `FK_Reference_12` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
+  CONSTRAINT `FK_Reference_5` FOREIGN KEY (`title_id`) REFERENCES `title` (`tile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `class_title`
+--
+
+LOCK TABLES `class_title` WRITE;
+/*!40000 ALTER TABLE `class_title` DISABLE KEYS */;
+INSERT INTO `class_title` VALUES ('0000','20150003'),('0001','20150003'),('0002','20150003'),('0003','20150003'),('1000','20150003'),('1002','20150003');
+/*!40000 ALTER TABLE `class_title` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `college`
+--
+
+DROP TABLE IF EXISTS `college`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `college` (
+  `college_id` varchar(20) NOT NULL,
+  `college_name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`college_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `college`
+--
+
+LOCK TABLES `college` WRITE;
+/*!40000 ALTER TABLE `college` DISABLE KEYS */;
+INSERT INTO `college` VALUES ('SCUT00','华南理工大学软件学院'),('SCUT01','华南理工大学计算机科学与技术学院');
+/*!40000 ALTER TABLE `college` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `home_phone_number`
+--
+
+DROP TABLE IF EXISTS `home_phone_number`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `home_phone_number` (
+  `student_id` char(12) NOT NULL,
+  `home_number` varchar(15) NOT NULL,
+  PRIMARY KEY (`student_id`,`home_number`),
+  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `home_phone_number`
+--
+
+LOCK TABLES `home_phone_number` WRITE;
+/*!40000 ALTER TABLE `home_phone_number` DISABLE KEYS */;
+INSERT INTO `home_phone_number` VALUES ('201430031217','5125445'),('201430040271','5543488'),('201430611419','5445424'),('201430613079','4737834'),('201430613116','4536456'),('201430613468','4564564');
+/*!40000 ALTER TABLE `home_phone_number` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personal_phone_number`
+--
+
+DROP TABLE IF EXISTS `personal_phone_number`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personal_phone_number` (
+  `student_id` char(12) NOT NULL,
+  `personal_phone_number` varchar(15) NOT NULL,
+  PRIMARY KEY (`student_id`,`personal_phone_number`),
+  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personal_phone_number`
+--
+
+LOCK TABLES `personal_phone_number` WRITE;
+/*!40000 ALTER TABLE `personal_phone_number` DISABLE KEYS */;
+INSERT INTO `personal_phone_number` VALUES ('201430031217','0'),('201430040271','0'),('201430611419','0'),('201430613079','15975430135'),('201430613116','13246800313'),('201430613468','15521459106'),('201430614168','18813298310'),('201436612106','13250785589'),('201530361887','13336411445'),('201530611050','13510926599'),('201530611074','18102573949'),('201530611197','13427535052'),('201530611210','0'),('201530611227','15603078034'),('201530611258','13560028641'),('201530611272','13631432760'),('201530611302','13416376424'),('201530611333','13246826527'),('201530611388','13430214519'),('201530611456','13632462321'),('201530611463','13414196693'),('201530611487','13068663146'),('201530611524','13427534581'),('201530611654','13416359699'),('201530611708','18680146116'),('201530611739','13790291113'),('201530611814','13560029934'),('201530611852','13631427949'),('201530611944','13427534923'),('201530611975','13719464577'),('201530611999','13719471005'),('201530612033','13560029208'),('201530612040','0'),('201530612231','0'),('201530612309','13631435762'),('201530612323','13580322609'),('201530612354','13719469649'),('201530612408','18122150846'),('201530612439','0'),('201530612460','13719460486'),('201530612590','0'),('201530612651','13427551728'),('201530612668','13631432757'),('201530612682','13226625231'),('201530612705','15626292797'),('201530612750','13631432732'),('201530612927','13427534902'),('201530613009','13416375739'),('201530613085','18218447360'),('201530613115','0'),('201530613139','13560029058'),('201530613146','13360534607'),('201530613177','13560025462'),('201530613252','13430214516'),('201530613269','13416372094'),('201530613368','13631433176'),('201530613610','13534378939'),('201530613634','13129700387'),('201530613665','13724001696'),('201530613696','13416377150'),('201530613719','13427523928'),('201530613832','13416373718'),('201530613900','13560488345'),('201530613979','13427521084'),('201530613993','13631428108'),('201530614090','0'),('201536612969','18102573504'),('201536613478','15521168174'),('201537612364','18665039726'),('201538612781','13631433117'),('201620134551','0'),('201630128120','15920119680'),('201630225881','17701956990'),('201630418053','0'),('201630642789','15521073996'),('201630663881','15918423185'),('201630663988','15902056273'),('201630664062','15813578318'),('201630664079','0'),('201630664109','13728020524'),('201630664123','13192959087'),('201630664130','18813585962'),('201630664147','0'),('201630664178','0'),('201630664192','17701956906'),('201630664208','15521297365'),('201630664260','15920136778'),('201630664291','15975581267'),('201630664321','17724030632'),('201630664345','18825671410'),('201630664369','15625171476'),('201630664406','0'),('201630664451','0'),('201630664628','15079436189'),('201630664666','0'),('201630664703','0'),('201630664734','0'),('201630664802','0'),('201630664864','15920138426'),('201630664871','15920137213'),('201630664918','0'),('201630664963','0'),('201630664970','0'),('201630664994','15521118178'),('201630665014','1521033129'),('201630665038','0'),('201630665120','0'),('201630665137','0'),('201630665188','15975516457'),('201630665199','15975569874'),('201630665212','0'),('201630665267','0'),('201630665298','0'),('201630665311','0'),('201630665359','13138314740'),('201630665403','0'),('201630665441','0'),('201630665496','18107944018'),('201630665533','15521262989'),('201630665687','0'),('201630665700','0'),('201630665748','15920126854'),('201630665779','15920134139'),('201630665786','0'),('201630665809','0'),('201630665823','17724030637'),('201630665885','15920126843'),('201630665908','15521095157'),('201630665939','15521248049'),('201630666059','15975579489'),('201630666073','17701950964'),('201630666097','15521215763'),('201630666110','0'),('201630666158','0'),('201630666165','15902057719'),('201630666172','13128232689'),('201630666233','0'),('201630666271','13539013508'),('201630666363','0'),('201630666400','0'),('201630666448','17728100116'),('201630666493','13715899977'),('201630666516','15920126862'),('201630666608','0'),('201630666615','0'),('201630666639','15521336754'),('201630666646','0'),('201630666653','0'),('201630666660','0'),('201630676676','0'),('201630676683','15521175125'),('201630676690','0'),('201630676737','0'),('201630676744','15521168005'),('201630676782','0'),('201630676799','15521221534'),('201630676829','0'),('201630676843','15918404969'),('201630676874','15521068185'),('201630676898','0'),('201630676911','0'),('201630676928','0'),('201635666214','0'),('201636665629','18206469585'),('201636666626','15625075321');
+/*!40000 ALTER TABLE `personal_phone_number` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `section`
+--
+
+DROP TABLE IF EXISTS `section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `section` (
+  `section_id` varchar(20) NOT NULL,
+  `section_semester` enum('Spring Semester','Summer Term','Autumn') NOT NULL,
+  `section_year` year(4) NOT NULL,
+  `course_id` varchar(20) NOT NULL,
+  PRIMARY KEY (`section_id`,`section_semester`,`section_year`,`course_id`),
+  KEY `FK_Reference_8` (`course_id`),
+  CONSTRAINT `FK_Reference_8` FOREIGN KEY (`course_id`) REFERENCES `Course` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `section`
+--
+
+LOCK TABLES `section` WRITE;
+/*!40000 ALTER TABLE `section` DISABLE KEYS */;
+INSERT INTO `section` VALUES ('20170001','Spring Semester',2017,'CS224d'),('20170001','Autumn',2017,'CS224d'),('20170002','Spring Semester',2017,'CS224n'),('20170002','Autumn',2017,'CS224n'),('20170003','Summer Term',2017,'CS229'),('20170003','Autumn',2017,'CS229');
+/*!40000 ALTER TABLE `section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student`
+--
+
+DROP TABLE IF EXISTS `student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student` (
+  `student_id` char(20) NOT NULL,
+  `student_birth` date DEFAULT NULL,
+  `student_name` varchar(20) DEFAULT NULL,
+  `student_sex` char(2) DEFAULT NULL,
+  `class_id` varchar(20) DEFAULT NULL,
+  `student_city` varchar(20) DEFAULT NULL,
+  `student_photo` varchar(50) DEFAULT NULL,
+  `student_profile` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  KEY `FK_Reference_1` (`class_id`),
+  CONSTRAINT `FK_Reference_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES ('201430031217',NULL,'石苏鹏',NULL,'20140001',NULL,NULL,NULL),('201430040271',NULL,'王昌盛',NULL,'20140001',NULL,NULL,NULL),('201430611419',NULL,'黎一锴',NULL,'20140006',NULL,NULL,NULL),('201430613079',NULL,'莫梓钊 ',NULL,'20140005',NULL,NULL,NULL),('201430613116',NULL,'钱彬',NULL,'20140002',NULL,NULL,NULL),('201430613468',NULL,'巫志旺',NULL,'20140007',NULL,NULL,NULL),('201430614168',NULL,'许守恺',NULL,'20140001',NULL,NULL,NULL),('201436612106',NULL,'梁广攀 ',NULL,'20140002',NULL,NULL,NULL),('201530361887',NULL,'谢健邦',NULL,'20150006',NULL,NULL,NULL),('201530611050',NULL,'蔡俊吉',NULL,'20150003',NULL,NULL,NULL),('201530611074',NULL,'蔡兴阳',NULL,'20150006',NULL,NULL,NULL),('201530611197',NULL,'陈金健',NULL,'20150006',NULL,NULL,NULL),('201530611210',NULL,'陈秋伶',NULL,'20150002',NULL,NULL,NULL),('201530611227',NULL,'陈森',NULL,'20150003',NULL,NULL,NULL),('201530611258',NULL,'陈蔚麟',NULL,'20150003',NULL,NULL,NULL),('201530611272',NULL,'陈文慧',NULL,'20150003',NULL,NULL,NULL),('201530611302',NULL,'陈英凤',NULL,'20150003',NULL,NULL,NULL),('201530611333',NULL,'陈泽森',NULL,'20150003',NULL,NULL,NULL),('201530611388',NULL,'邓隽元',NULL,'20150007',NULL,NULL,NULL),('201530611456',NULL,'方赞杰',NULL,'20150006',NULL,NULL,NULL),('201530611463',NULL,'冯泽辉',NULL,'20150003',NULL,NULL,NULL),('201530611487',NULL,'甘监彬',NULL,'20150003',NULL,NULL,NULL),('201530611524',NULL,'郭蕴喆',NULL,'20150003',NULL,NULL,NULL),('201530611654',NULL,'黄彬烊',NULL,'20150003',NULL,NULL,NULL),('201530611708',NULL,'黄浩填',NULL,'20150003',NULL,NULL,NULL),('201530611739',NULL,'黄景浩',NULL,'20150003',NULL,NULL,NULL),('201530611814',NULL,'江丽娜',NULL,'20150003',NULL,NULL,NULL),('201530611852',NULL,'孔俊生',NULL,'20150003',NULL,NULL,NULL),('201530611944',NULL,'李焕童',NULL,'20150003',NULL,NULL,NULL),('201530611975',NULL,'李嘉明',NULL,'20150006',NULL,NULL,NULL),('201530611999',NULL,'李可欣',NULL,'20150003',NULL,NULL,NULL),('201530612033',NULL,'李锐泳 ',NULL,'20150006',NULL,NULL,NULL),('201530612040',NULL,'李寿斌',NULL,'20150007',NULL,NULL,NULL),('201530612231',NULL,'林俊钦',NULL,'20150006',NULL,NULL,NULL),('201530612309',NULL,'林兆桃',NULL,'20150003',NULL,NULL,NULL),('201530612323',NULL,'林智远',NULL,'20150003',NULL,NULL,NULL),('201530612354',NULL,'刘锵',NULL,'20150003',NULL,NULL,NULL),('201530612408',NULL,'刘卓伦',NULL,'20150003',NULL,NULL,NULL),('201530612439',NULL,'龙舒杰',NULL,'20150006',NULL,NULL,NULL),('201530612460',NULL,'卢润茁',NULL,'20150003',NULL,NULL,NULL),('201530612590',NULL,'潘文杰',NULL,'20150006',NULL,NULL,NULL),('201530612651',NULL,'任嘉宁',NULL,'20150003',NULL,NULL,NULL),('201530612668',NULL,'阮子琦',NULL,'20150006',NULL,NULL,NULL),('201530612682',NULL,'沈承胜',NULL,'20150003',NULL,NULL,NULL),('201530612705',NULL,'舒欣 ',NULL,'20150006',NULL,NULL,NULL),('201530612750',NULL,'苏人桢',NULL,'20150003',NULL,NULL,NULL),('201530612927',NULL,'王煜',NULL,'20150003',NULL,NULL,NULL),('201530613009',NULL,'文威 ',NULL,'20150004',NULL,NULL,NULL),('201530613085',NULL,'吴泽恩',NULL,'20150005',NULL,NULL,NULL),('201530613115',NULL,'伍瀚杰',NULL,'20150006',NULL,NULL,NULL),('201530613139',NULL,'夏俊煊',NULL,'20150003',NULL,NULL,NULL),('201530613146',NULL,'肖亮昱',NULL,'20150003',NULL,NULL,NULL),('201530613177',NULL,'肖翥恺',NULL,'20150003',NULL,NULL,NULL),('201530613252',NULL,'徐强胜',NULL,'20150003',NULL,NULL,NULL),('201530613269',NULL,'徐志范',NULL,'20150003',NULL,NULL,NULL),('201530613368',NULL,'颜常霖',NULL,'20150003',NULL,NULL,NULL),('201530613610',NULL,'张华奎',NULL,'20150003',NULL,NULL,NULL),('201530613634',NULL,'张欣照',NULL,'20150003',NULL,NULL,NULL),('201530613665',NULL,'张雨虹',NULL,'20150003',NULL,NULL,NULL),('201530613696',NULL,'张缘',NULL,'20150003',NULL,NULL,NULL),('201530613719',NULL,'张子伟',NULL,'20150003',NULL,NULL,NULL),('201530613832',NULL,'周长鑫',NULL,'20150003',NULL,NULL,NULL),('201530613900',NULL,'周昭育',NULL,'20150002',NULL,NULL,NULL),('201530613979',NULL,'庄仁鑫',NULL,'20150003',NULL,NULL,NULL),('201530613993',NULL,'邹宇伦',NULL,'20150003',NULL,NULL,NULL),('201530614090',NULL,'谢楚荣',NULL,'20140002',NULL,NULL,NULL),('201536612969',NULL,'韦武杰',NULL,'20150003',NULL,NULL,NULL),('201536613478',NULL,'游镕江',NULL,'20150003',NULL,NULL,NULL),('201537612364',NULL,'刘天逸',NULL,'20150003',NULL,NULL,NULL),('201538612781',NULL,'苏芷莹  ',NULL,'20150004',NULL,NULL,NULL),('201620134551',NULL,'袁星',NULL,'20160011',NULL,NULL,NULL),('201630128120',NULL,'陈丹燕  ',NULL,'20160005',NULL,NULL,NULL),('201630225881',NULL,'马森禹',NULL,'20160007',NULL,NULL,NULL),('201630418053',NULL,'苏江科夫',NULL,'20160007',NULL,NULL,NULL),('201630642789',NULL,'李克奉 ',NULL,'20160004',NULL,NULL,NULL),('201630663881',NULL,'蔡东林 ',NULL,'20160003',NULL,NULL,NULL),('201630663988',NULL,'陈港鸿',NULL,'20160003',NULL,NULL,NULL),('201630664062',NULL,'陈绿佳',NULL,'20160005',NULL,NULL,NULL),('201630664079',NULL,'陈绵涵',NULL,'20160005',NULL,NULL,NULL),('201630664109',NULL,'陈伟豪',NULL,'20160006',NULL,NULL,NULL),('201630664123',NULL,'陈晓滨 ',NULL,'20160006',NULL,NULL,NULL),('201630664130',NULL,'陈晓钢',NULL,'20160006',NULL,NULL,NULL),('201630664147',NULL,'陈雪莹',NULL,'20160006',NULL,NULL,NULL),('201630664178',NULL,'陈运辉',NULL,'20160006',NULL,NULL,NULL),('201630664192',NULL,'陈振业  ',NULL,'20160006',NULL,NULL,NULL),('201630664208',NULL,'陈镇南',NULL,'20160006',NULL,NULL,NULL),('201630664260',NULL,'邓永豪',NULL,'20160005',NULL,NULL,NULL),('201630664291',NULL,'范文虎',NULL,'20160001',NULL,NULL,NULL),('201630664321',NULL,'高昊  ',NULL,'20160001',NULL,NULL,NULL),('201630664345',NULL,'高转明',NULL,'20160001',NULL,NULL,NULL),('201630664369',NULL,'耿帅斌',NULL,'20160001',NULL,NULL,NULL),('201630664406',NULL,'何健聪 ',NULL,'20160006',NULL,NULL,NULL),('201630664451',NULL,'黄彬彬',NULL,'20160001',NULL,NULL,NULL),('201630664628',NULL,'金日进',NULL,'20160005',NULL,NULL,NULL),('201630664666',NULL,'赖伟杰 ',NULL,'20160005',NULL,NULL,NULL),('201630664703',NULL,'李冠海',NULL,'20160005',NULL,NULL,NULL),('201630664734',NULL,'李虎潼 ',NULL,'20160006',NULL,NULL,NULL),('201630664802',NULL,'李立辉 ',NULL,'20160004',NULL,NULL,NULL),('201630664864',NULL,'李旺升',NULL,'20160005',NULL,NULL,NULL),('201630664871',NULL,'李宇振',NULL,'20160005',NULL,NULL,NULL),('201630664918',NULL,'连木明',NULL,'20160004',NULL,NULL,NULL),('201630664963',NULL,'梁文浚',NULL,'20160004',NULL,NULL,NULL),('201630664970',NULL,'梁煊',NULL,'20160002',NULL,NULL,NULL),('201630664994',NULL,'梁永恒',NULL,'20160001',NULL,NULL,NULL),('201630665014',NULL,'梁梓峰',NULL,'20160001',NULL,NULL,NULL),('201630665038',NULL,'廖永标 ',NULL,'20160002',NULL,NULL,NULL),('201630665120',NULL,'凌通',NULL,'20160002',NULL,NULL,NULL),('201630665137',NULL,'刘斌',NULL,'20160002',NULL,NULL,NULL),('201630665188',NULL,'刘嘉文',NULL,'20160002',NULL,NULL,NULL),('201630665199',NULL,'刘旭',NULL,'20160002',NULL,NULL,NULL),('201630665212',NULL,'刘杨栋',NULL,'20160002',NULL,NULL,NULL),('201630665267',NULL,'刘征侚',NULL,'20160002',NULL,NULL,NULL),('201630665298',NULL,'卢越兴',NULL,'20160002',NULL,NULL,NULL),('201630665311',NULL,'罗凡',NULL,'20160002',NULL,NULL,NULL),('201630665359',NULL,'罗颂琦',NULL,'20160003',NULL,NULL,NULL),('201630665403',NULL,'马宗乘',NULL,'20160002',NULL,NULL,NULL),('201630665441',NULL,'潘浩霖 ',NULL,'20160002',NULL,NULL,NULL),('201630665496',NULL,'邱晨兴',NULL,'20160003',NULL,NULL,NULL),('201630665533',NULL,'区颖俊 ',NULL,'20160003',NULL,NULL,NULL),('201630665687',NULL,'唐宁翎  ',NULL,'20160006',NULL,NULL,NULL),('201630665700',NULL,'汪良应',NULL,'20160006',NULL,NULL,NULL),('201630665748',NULL,'王谦',NULL,'20160006',NULL,NULL,NULL),('201630665779',NULL,'王业超 ',NULL,'20160006',NULL,NULL,NULL),('201630665786',NULL,'王英杰 ',NULL,'20160006',NULL,NULL,NULL),('201630665809',NULL,'王泽洋',NULL,'20160006',NULL,NULL,NULL),('201630665823',NULL,'韦瑞峰',NULL,'20160006',NULL,NULL,NULL),('201630665885',NULL,'吴金泽 ',NULL,'20160004',NULL,NULL,NULL),('201630665908',NULL,'吴潘安 ',NULL,'20160001',NULL,NULL,NULL),('201630665939',NULL,'吴志祥',NULL,'20160001',NULL,NULL,NULL),('201630666059',NULL,'徐辉哲 ',NULL,'20160007',NULL,NULL,NULL),('201630666073',NULL,'许家乐',NULL,'20160001',NULL,NULL,NULL),('201630666097',NULL,'许婷 ',NULL,'20160003',NULL,NULL,NULL),('201630666110',NULL,'颜裕锋 ',NULL,'20160001',NULL,NULL,NULL),('201630666158',NULL,'杨劲松',NULL,'20160002',NULL,NULL,NULL),('201630666165',NULL,'杨玉卿',NULL,'20160002',NULL,NULL,NULL),('201630666172',NULL,'姚和良',NULL,'20160002',NULL,NULL,NULL),('201630666233',NULL,'游增',NULL,'20160002',NULL,NULL,NULL),('201630666271',NULL,'余信志 ',NULL,'20160007',NULL,NULL,NULL),('201630666363',NULL,'张栩豪',NULL,'20160003',NULL,NULL,NULL),('201630666400',NULL,'张宇华',NULL,'20160005',NULL,NULL,NULL),('201630666448',NULL,'赵烁文',NULL,'20160005',NULL,NULL,NULL),('201630666493',NULL,'郑铠锋 ',NULL,'20160005',NULL,NULL,NULL),('201630666516',NULL,'郑宜静 ',NULL,'20160004',NULL,NULL,NULL),('201630666608',NULL,'祝鹏富',NULL,'20160005',NULL,NULL,NULL),('201630666615',NULL,'庄国瑞',NULL,'20160005',NULL,NULL,NULL),('201630666639',NULL,'宗子杰 ',NULL,'20160004',NULL,NULL,NULL),('201630666646',NULL,'邹嘉衡 ',NULL,'20160004',NULL,NULL,NULL),('201630666653',NULL,'邹鹏宇',NULL,'20160004',NULL,NULL,NULL),('201630666660',NULL,'邹盛熠   ',NULL,'20160004',NULL,NULL,NULL),('201630676676',NULL,'蔡思凯',NULL,'20160007',NULL,NULL,NULL),('201630676683',NULL,'冯嘉伟 ',NULL,'20160007',NULL,NULL,NULL),('201630676690',NULL,'桂宇翔',NULL,'20160007',NULL,NULL,NULL),('201630676737',NULL,'黄卓远',NULL,'20160007',NULL,NULL,NULL),('201630676744',NULL,'黄子凯',NULL,'20160007',NULL,NULL,NULL),('201630676782',NULL,'李培文',NULL,'20160007',NULL,NULL,NULL),('201630676799',NULL,'李振梁',NULL,'20160007',NULL,NULL,NULL),('201630676829',NULL,'卢健威 ',NULL,'20160007',NULL,NULL,NULL),('201630676843',NULL,'石望华',NULL,'20160007',NULL,NULL,NULL),('201630676874',NULL,'唐素香',NULL,'20160007',NULL,NULL,NULL),('201630676898',NULL,'魏一戈',NULL,'20160007',NULL,NULL,NULL),('201630676911',NULL,'杨芳璇',NULL,'20160007',NULL,NULL,NULL),('201630676928',NULL,'杨岚钧   ',NULL,'20160007',NULL,NULL,NULL),('201635666214',NULL,'应希隆',NULL,'20160005',NULL,NULL,NULL),('201636665629',NULL,'孙文',NULL,'20160004',NULL,NULL,NULL),('201636666626',NULL,'宗文智',NULL,'20160004',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student_title`
+--
+
+DROP TABLE IF EXISTS `student_title`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student_title` (
+  `title_id` varchar(20) NOT NULL,
+  `student_id` char(12) NOT NULL,
+  PRIMARY KEY (`title_id`,`student_id`),
+  KEY `FK_Reference_11` (`student_id`),
+  CONSTRAINT `FK_Reference_11` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`),
+  CONSTRAINT `FK_Reference_4` FOREIGN KEY (`title_id`) REFERENCES `title` (`tile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student_title`
+--
+
+LOCK TABLES `student_title` WRITE;
+/*!40000 ALTER TABLE `student_title` DISABLE KEYS */;
+INSERT INTO `student_title` VALUES ('0000','201530611258'),('1002','201530611302'),('1002','201530611333'),('0002','201530611524'),('1002','201530611944'),('0003','201530613139'),('1000','201530613665'),('0001','201530613719');
+/*!40000 ALTER TABLE `student_title` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `take`
+--
+
+DROP TABLE IF EXISTS `take`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `take` (
+  `section_id` varchar(20) NOT NULL,
+  `section_semester` enum('Spring Semester','Summer Term','Autumn Semester') DEFAULT NULL,
+  `secton_year` year(4) DEFAULT NULL,
+  `course_id` varchar(20) DEFAULT NULL,
+  `student_id` char(12) DEFAULT NULL,
+  `grade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`section_id`),
+  KEY `FK_Reference_17` (`section_id`,`section_semester`,`secton_year`,`course_id`),
+  KEY `FK_Reference_10` (`student_id`),
+  CONSTRAINT `FK_Reference_10` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`),
+  CONSTRAINT `FK_Reference_17` FOREIGN KEY (`section_id`, `section_semester`, `secton_year`, `course_id`) REFERENCES `section` (`section_id`, `section_semester`, `section_year`, `course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `take`
+--
+
+LOCK TABLES `take` WRITE;
+/*!40000 ALTER TABLE `take` DISABLE KEYS */;
+INSERT INTO `take` VALUES ('20170001','Spring Semester',2017,'CS224d','201430031217',67),('20170002','Spring Semester',2017,'CS224n','201430040271',75),('20170003','Summer Term',2017,'CS229','201430611419',82);
+/*!40000 ALTER TABLE `take` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teach`
+--
+
+DROP TABLE IF EXISTS `teach`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teach` (
+  `section_id` varchar(20) NOT NULL,
+  `section_semester` enum('Spring Semester','Summer Term','Autumn Semester') NOT NULL,
+  `secton_year` year(4) DEFAULT NULL,
+  `course_id` varchar(20) DEFAULT NULL,
+  `teacher_id` char(12) DEFAULT NULL,
+  `class_id` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`section_id`,`section_semester`),
+  KEY `FK_Reference_18` (`section_id`,`section_semester`,`secton_year`,`course_id`),
+  KEY `FK_Reference_15` (`teacher_id`),
+  KEY `FK_Reference_16` (`class_id`),
+  CONSTRAINT `FK_Reference_15` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `FK_Reference_16` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`),
+  CONSTRAINT `FK_Reference_18` FOREIGN KEY (`section_id`, `section_semester`, `secton_year`, `course_id`) REFERENCES `section` (`section_id`, `section_semester`, `section_year`, `course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teach`
+--
+
+LOCK TABLES `teach` WRITE;
+/*!40000 ALTER TABLE `teach` DISABLE KEYS */;
+INSERT INTO `teach` VALUES ('20170001','Spring Semester',2017,'CS224d','2015001146','20150001'),('20170001','Autumn Semester',2017,'CS224d','2015001158','20150002'),('20170002','Spring Semester',2017,'CS224n','2015001174','20150003'),('20170002','Autumn Semester',2017,'CS224n','2015003548','20150004'),('20170003','Summer Term',2017,'CS229','2015004548','20150005'),('20170003','Autumn Semester',2017,'CS229','2015004686','20150006');
+/*!40000 ALTER TABLE `teach` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teacher`
+--
+
+DROP TABLE IF EXISTS `teacher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teacher` (
+  `teacher_id` char(12) NOT NULL,
+  `teacher_name` varchar(20) DEFAULT NULL,
+  `positional_title` enum('assistant','lecturer','assistant professor','professor') DEFAULT NULL,
+  `teacher_office` varchar(10) DEFAULT NULL,
+  `is_adviser` tinyint(1) DEFAULT NULL,
+  `teacher_phone` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`teacher_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teacher`
+--
+
+LOCK TABLES `teacher` WRITE;
+/*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
+INSERT INTO `teacher` VALUES ('2015001146','蔡毅','professor','B8',1,NULL),('2015001158','谭明奎','professor','B8',0,NULL),('2015001174','方琼','assistant professor','B8',1,NULL),('2015003548','曾兵','lecturer','B8',0,NULL),('2015004548','吴庆耀','professor','B7',1,NULL),('2015004686','刘志','assistant','B7',0,NULL);
+/*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teacher_college`
+--
+
+DROP TABLE IF EXISTS `teacher_college`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teacher_college` (
+  `college_id` varchar(20) NOT NULL,
+  `teacher_id` char(12) NOT NULL,
+  PRIMARY KEY (`college_id`,`teacher_id`),
+  KEY `FK_Reference_6` (`teacher_id`),
+  CONSTRAINT `FK_Reference_6` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`),
+  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`college_id`) REFERENCES `college` (`college_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teacher_college`
+--
+
+LOCK TABLES `teacher_college` WRITE;
+/*!40000 ALTER TABLE `teacher_college` DISABLE KEYS */;
+INSERT INTO `teacher_college` VALUES ('SCUT00','2015001146'),('SCUT00','2015001158'),('SCUT00','2015001174'),('SCUT00','2015003548'),('SCUT00','2015004548'),('SCUT00','2015004686');
+/*!40000 ALTER TABLE `teacher_college` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `title`
+--
+
+DROP TABLE IF EXISTS `title`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `title` (
+  `tile_id` varchar(20) NOT NULL,
+  `title_name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`tile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `title`
+--
+
+LOCK TABLES `title` WRITE;
+/*!40000 ALTER TABLE `title` DISABLE KEYS */;
+INSERT INTO `title` VALUES ('0000','班长'),('0001','团支书'),('0002','学习委员'),('0003','学风督导委员'),('1000','副班长'),('1001','副团支书'),('1002','副学习委员');
+/*!40000 ALTER TABLE `title` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_information`
+--
+
+DROP TABLE IF EXISTS `user_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_information` (
+  `user_name` varchar(20) NOT NULL,
+  `user_password` varchar(20) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_information`
+--
+
+LOCK TABLES `user_information` WRITE;
+/*!40000 ALTER TABLE `user_information` DISABLE KEYS */;
+INSERT INTO `user_information` VALUES ('lucas','123456',1);
+/*!40000 ALTER TABLE `user_information` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-12-20 22:32:59
